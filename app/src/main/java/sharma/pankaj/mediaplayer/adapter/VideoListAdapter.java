@@ -15,12 +15,10 @@ import sharma.pankaj.mediaplayer.databinding.VideoListLayoutBinding;
 
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
 
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
     private List<String> list;
-    private Context context;
 
     public VideoListAdapter(Context context) {
-        this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
@@ -32,15 +30,15 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull VideoListAdapter.ViewHolder holder, int position) {
-        Log.e("sdsjd", "ssss: " + list.get(position) );
+        Log.e("sdsjd", "ssss: " + list.get(position));
         holder.binding.location.setText(list.get(position));
     }
 
     @Override
     public int getItemCount() {
-        if (!list.isEmpty()){
+        if (!list.isEmpty()) {
             return list.size();
-        } else{
+        } else {
             return 0;
         }
     }

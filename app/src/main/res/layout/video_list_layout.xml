@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:textColor="@color/black"
         android:gravity="center"
+        android:padding="16dp"
         android:id="@+id/location"/>
 
 </androidx.cardview.widget.CardView>

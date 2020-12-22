@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class VideoFragment extends Fragment {
         binding = FragmentVideoBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         adapter = new VideoListAdapter(requireContext());
+        binding.videoRecycleView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.videoRecycleView.setAdapter(adapter);
         VideoViewModel model = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
         model.getVideoList().observe(requireActivity(), videosList -> {
@@ -40,9 +42,8 @@ public class VideoFragment extends Fragment {
                 Log.e(TAG, "onCreateView:  vccvcv " +videosList );
                 binding.notFound.setVisibility(View.GONE);
                 binding.videoRecycleView.setVisibility(View.VISIBLE);
-
+                adapter.setVideoList(videosList);
             }
-            adapter.setVideoList(videosList);
         });
 
         return view;
