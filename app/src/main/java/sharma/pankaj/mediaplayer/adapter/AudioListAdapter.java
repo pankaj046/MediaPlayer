@@ -2,8 +2,6 @@ package sharma.pankaj.mediaplayer.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,47 +13,40 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import sharma.pankaj.mediaplayer.R;
+import sharma.pankaj.mediaplayer.databinding.AudioListLayoutBinding;
 import sharma.pankaj.mediaplayer.databinding.VideoListLayoutBinding;
-import sharma.pankaj.mediaplayer.model.VideoModel;
-import sharma.pankaj.mediaplayer.viewmodel.VideoViewModel;
+import sharma.pankaj.mediaplayer.model.AudioModel;
 
-public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
+public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private List<VideoModel> list;
     private final Context context;
-    public VideoListAdapter(Context context) {
+    private List<AudioModel> list;
+
+    public AudioListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         this.context = context;
     }
 
     @NonNull
     @Override
-    public VideoListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(VideoListLayoutBinding.inflate(inflater, parent, false));
+    public AudioListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(AudioListLayoutBinding.inflate(inflater, parent, false));
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
-    public void onBindViewHolder(@NonNull VideoListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AudioListAdapter.ViewHolder holder, int position) {
         Log.e("sdsjd", "ssss: " + list.get(position));
         holder.binding.location.setText(list.get(position).getName());
         holder.binding.duration.setText(list.get(position).getDuration());
-        if (list.get(position).getThumbNail()!=null){
-            holder.binding.icon.setImageBitmap(list.get(position).getThumbNail());
-        }else {
-            holder.binding.icon.setImageDrawable(context.getDrawable(R.drawable.ic_video_24dp));
-        }
-
+        holder.binding.icon.setImageDrawable(context.getDrawable(R.drawable.ic_audiotrack_24));
         holder.binding.option.setOnClickListener(v -> {
             optionMenu(list.get(position).getPath(), v);
         });
-
     }
 
     @Override
@@ -69,16 +60,17 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        VideoListLayoutBinding binding;
+        AudioListLayoutBinding binding;
 
-        public ViewHolder(@NonNull VideoListLayoutBinding itemView) {
+        public ViewHolder(@NonNull AudioListLayoutBinding itemView) {
             super(itemView.getRoot());
             this.binding = itemView;
         }
     }
 
-    public void setVideoList(List<VideoModel> videoList) {
+    public void setVideoList(List<AudioModel> videoList) {
         list = videoList;
+        Log.e("sdsjd", "onBindViewHolder: " + videoList);
         notifyDataSetChanged();
     }
 

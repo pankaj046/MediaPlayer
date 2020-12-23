@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import sharma.pankaj.mediaplayer.ui.fragment.FavoriteFragment;
 import sharma.pankaj.mediaplayer.ui.fragment.VideoFragment;
 import sharma.pankaj.mediaplayer.ui.fragment.AudioFragment;
 
@@ -25,7 +26,7 @@ public class ViewStateAdapter extends FragmentStateAdapter {
         }else if (position == 1){
             return new AudioFragment();
         }else {
-            return new AudioFragment();
+            return new FavoriteFragment();
         }
     }
 

@@ -34,6 +34,7 @@ public class VideoFragment extends Fragment {
         binding.videoRecycleView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.videoRecycleView.setAdapter(adapter);
         VideoViewModel model = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
+
         model.getVideoList().observe(requireActivity(), videosList -> {
             if (videosList.isEmpty()){
                 binding.notFound.setVisibility(View.VISIBLE);

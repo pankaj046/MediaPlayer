@@ -2,11 +2,7 @@ package sharma.pankaj.mediaplayer.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -16,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,42 +19,39 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import sharma.pankaj.mediaplayer.AppController;
-import sharma.pankaj.mediaplayer.model.VideoModel;
+import sharma.pankaj.mediaplayer.model.AudioModel;
 
-public class VideoViewModel extends AndroidViewModel {
+public class AudioViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<VideoModel>> videoList;
+    private MutableLiveData<List<AudioModel>> videoList;
     private static final String TAG = "VideoViewModel";
     Application application;
 
-    public VideoViewModel(@NonNull Application application) {
+    public AudioViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
     }
 
-    public LiveData<List<VideoModel>> getVideoList() {
+    public LiveData<List<AudioModel>> getVideoList() {
         if (videoList == null) {
-            videoList = new MutableLiveData<List<VideoModel>>();
+            videoList = new MutableLiveData<List<AudioModel>>();
             loadVideos();
         }
         return videoList;
     }
 
     private void loadVideos() {
-        List<VideoModel> list = new ArrayList<>();
+        List<AudioModel> list = new ArrayList<>();
         String[] projection = { MediaStore.Video.VideoColumns.DATA ,MediaStore.Video.Media.DISPLAY_NAME};
-        Cursor cursor =  application.getApplicationContext().getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, projection, null, null, null);
+        Cursor cursor =  application.getApplicationContext().getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, null, null, null);
         String name, path, duration;
-        Bitmap bitmap = null;
         try {
             cursor.moveToFirst();
             do{
                 path = (cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)));
                 name = getName(path);
-                duration = getDuration(path);
-                list.add(new VideoModel(name, duration, path, bitmap));
-
+                duration  = getDuration(path);
+                list.add(new AudioModel(name, duration, path));
             }while(cursor.moveToNext());
 
             cursor.close();
@@ -69,6 +61,7 @@ public class VideoViewModel extends AndroidViewModel {
         }
         videoList.setValue(list);
     }
+
     //Extract name from file path
     private String getName(String path){
         String[] loc = path.split("/");
