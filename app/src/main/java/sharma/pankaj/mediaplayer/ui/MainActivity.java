@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
+import java.util.Objects;
 
 import sharma.pankaj.mediaplayer.R;
 import sharma.pankaj.mediaplayer.adapter.ViewStateAdapter;
@@ -33,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        setSupportActionBar(binding.toolbar);
+        if (getSupportActionBar()!=null){
+            getSupportActionBar().setTitle("Media Player");
+            binding.toolbar.setTitleTextColor(getResources().getColor(R.color.purple_500));
+        }
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Video"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Audio"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Favorite"));
@@ -64,16 +70,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (!isPermissionAllowed()){
+        if (!isPermissionAllowed(MainActivity.this)){
 
         }
     }
 
-    private boolean isPermissionAllowed() {
+    public static boolean isPermissionAllowed(Context context) {
         final boolean[] isAllowed = {false};
-        Dexter.withContext(this)
+        Dexter.withContext(context)
                 .withPermissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {

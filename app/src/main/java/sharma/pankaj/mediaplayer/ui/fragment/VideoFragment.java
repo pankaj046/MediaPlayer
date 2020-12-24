@@ -16,6 +16,8 @@ import sharma.pankaj.mediaplayer.adapter.VideoListAdapter;
 import sharma.pankaj.mediaplayer.databinding.FragmentVideoBinding;
 import sharma.pankaj.mediaplayer.viewmodel.VideoViewModel;
 
+import static sharma.pankaj.mediaplayer.ui.MainActivity.isPermissionAllowed;
+
 
 public class VideoFragment extends Fragment {
 
@@ -34,7 +36,6 @@ public class VideoFragment extends Fragment {
         binding.videoRecycleView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.videoRecycleView.setAdapter(adapter);
         VideoViewModel model = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
-
         model.getVideoList().observe(requireActivity(), videosList -> {
             if (videosList.isEmpty()){
                 binding.notFound.setVisibility(View.VISIBLE);
