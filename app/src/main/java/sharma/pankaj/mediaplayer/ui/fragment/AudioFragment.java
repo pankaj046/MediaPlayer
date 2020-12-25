@@ -38,15 +38,15 @@ public class AudioFragment extends Fragment {
         binding.audioRecycleView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.audioRecycleView.setAdapter(adapter);
         AudioViewModel model = new ViewModelProvider(requireActivity()).get(AudioViewModel.class);
-        model.getVideoList().observe(requireActivity(), videosList -> {
-            if (videosList.isEmpty()){
+        model.getAudioList().observe(requireActivity(), audioList -> {
+            if (audioList.isEmpty()){
                 binding.notFound.setVisibility(View.VISIBLE);
                 binding.audioRecycleView.setVisibility(View.GONE);
             }else {
-                Log.e(TAG, "onCreateView:  vccvcv " +videosList );
+                Log.e(TAG, "onCreateView:  sssss " +audioList );
                 binding.notFound.setVisibility(View.GONE);
                 binding.audioRecycleView.setVisibility(View.VISIBLE);
-                adapter.setVideoList(videosList);
+                adapter.setVideoList(audioList);
             }
         });
         return view;

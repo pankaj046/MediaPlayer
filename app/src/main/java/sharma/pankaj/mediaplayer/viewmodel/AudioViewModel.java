@@ -20,11 +20,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import sharma.pankaj.mediaplayer.model.AudioModel;
+import sharma.pankaj.mediaplayer.model.VideoModel;
 
 public class AudioViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<AudioModel>> videoList;
-    private static final String TAG = "VideoViewModel";
+    private MutableLiveData<List<AudioModel>> AudioList;
+    private static final String TAG = "AudioViewModel";
     Application application;
 
     public AudioViewModel(@NonNull Application application) {
@@ -32,62 +33,71 @@ public class AudioViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public LiveData<List<AudioModel>> getVideoList() {
-        if (videoList == null) {
-            videoList = new MutableLiveData<List<AudioModel>>();
-            loadVideos();
+    public LiveData<List<AudioModel>> getAudioList() {
+        if (AudioList == null) {
+            AudioList = new MutableLiveData<>();
+            loadAudios();
         }
-        return videoList;
+        return AudioList;
     }
 
-    private void loadVideos() {
+    private void loadAudios() {
         List<AudioModel> list = new ArrayList<>();
-        String[] projection = { MediaStore.Video.VideoColumns.DATA ,MediaStore.Video.Media.DISPLAY_NAME};
+        String[] projection = {MediaStore.Audio.AudioColumns.DATA, MediaStore.Audio.Media.DISPLAY_NAME};
         Cursor cursor =  application.getApplicationContext().getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, null, null, null);
+
         String name, path, duration;
         try {
             cursor.moveToFirst();
             do{
-                path = (cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)));
+                path = (cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)));
                 name = getName(path);
-                duration  = getDuration(path);
+                duration = getDuration(path);
                 list.add(new AudioModel(name, duration, path));
             }while(cursor.moveToNext());
 
             cursor.close();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "loadVideos: " +e );
+            Log.e(TAG, "loadAudios: " +e );
         }
-        videoList.setValue(list);
+        AudioList.setValue(list);
     }
 
     //Extract name from file path
-    private String getName(String path){
+    private String getName(String path) {
         String[] loc = path.split("/");
-        String[] nameWithExtension = loc[loc.length-1].split("\\.");
+        String[] nameWithExtension = loc[loc.length - 1].split("\\.");
         return nameWithExtension[0];
     }
-    //calculate duration of video
+
+    //calculate duration of Audio
     private String getDuration(String path){
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(application.getApplicationContext(), Uri.fromFile(new File(path)));
-        String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        String ss = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE);
-        Log.e("xcxcx", "getDuration: " + ss);
-        long timeInMillisec = Long.parseLong(time);
-        retriever.release();
-        @SuppressLint("DefaultLocale")
-        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeInMillisec),
-                TimeUnit.MILLISECONDS.toMinutes(timeInMillisec) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeInMillisec)),
-                TimeUnit.MILLISECONDS.toSeconds(timeInMillisec) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeInMillisec)));
-        String[] duration = hms.split(":");
         String result = "";
-        if (duration[0].equalsIgnoreCase("00") || duration[0].equalsIgnoreCase("0")){
-            result = duration[1] +":"+duration[2];
-        }else {
-            result = hms;
+        try {
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            retriever.setDataSource(application.getApplicationContext(), Uri.fromFile(new File(path)));
+            String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            String ss = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE);
+            Log.e("RRRRR", "getDuration: " + ss);
+            long timeInMillisec = Long.parseLong(time);
+            retriever.release();
+            @SuppressLint("DefaultLocale")
+            String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeInMillisec),
+                    TimeUnit.MILLISECONDS.toMinutes(timeInMillisec) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeInMillisec)),
+                    TimeUnit.MILLISECONDS.toSeconds(timeInMillisec) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeInMillisec)));
+            String[] duration = hms.split(":");
+
+            if (duration[0].equalsIgnoreCase("00") || duration[0].equalsIgnoreCase("0")) {
+                result = duration[1] + ":" + duration[2];
+            } else {
+                result = hms;
+            }
+        }catch (Exception e){
+            result = "00:00";
+            return result;
         }
+
         return result;
     }
 }
