@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
@@ -27,6 +29,7 @@ import sharma.pankaj.mediaplayer.databinding.AudioListLayoutBinding;
 import sharma.pankaj.mediaplayer.databinding.DialogLayoutBinding;
 import sharma.pankaj.mediaplayer.databinding.VideoListLayoutBinding;
 import sharma.pankaj.mediaplayer.model.AudioModel;
+import sharma.pankaj.mediaplayer.ui.fragment.VideoPlayerFragment;
 
 public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.ViewHolder> {
 
@@ -88,12 +91,17 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         popup.getMenu().add("Favorite");
         popup.getMenu().add("Delete");
         popup.setOnMenuItemClickListener(item -> {
-            if (item.getTitle().equals("Play")){
 
+            if (item.getTitle().equals("Play")){
+                FragmentActivity activity = (FragmentActivity)(context);
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment(path, context);
+                videoPlayerFragment.show(fragmentManager, "VideoPlayerFragment");
             }else if (item.getTitle().equals("Favorite")){
+                Toasty.success(context, "Favorite", Toasty.LENGTH_SHORT).show();
 
             }else {
-                showDialog(path);
+                 showDialog(path);
             }
             return true;
         });
