@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         }
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Video"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Audio"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Favorite"));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Image"));
 
         FragmentManager fm = getSupportFragmentManager();
         ViewStateAdapter sa = new ViewStateAdapter(fm, getLifecycle(), binding.tabLayout.getTabCount());

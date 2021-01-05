@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Media Player</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
     <string name="are_you_sure_want_to_delete_file">Are you sure want to delete file?</string>

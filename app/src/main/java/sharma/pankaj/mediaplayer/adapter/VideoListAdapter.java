@@ -3,15 +3,11 @@ package sharma.pankaj.mediaplayer.adapter;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
@@ -22,14 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import es.dmoral.toasty.Toasty;
 import sharma.pankaj.mediaplayer.R;
-import sharma.pankaj.mediaplayer.databinding.VideoListLayoutBinding;
+import sharma.pankaj.mediaplayer.databinding.ItemListLayoutBinding;
 import sharma.pankaj.mediaplayer.model.VideoModel;
 import sharma.pankaj.mediaplayer.ui.fragment.VideoPlayerFragment;
-import sharma.pankaj.mediaplayer.viewmodel.VideoViewModel;
 
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
 
@@ -44,7 +38,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     @NonNull
     @Override
     public VideoListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(VideoListLayoutBinding.inflate(inflater, parent, false));
+        return new ViewHolder(ItemListLayoutBinding.inflate(inflater, parent, false));
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -75,9 +69,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        VideoListLayoutBinding binding;
+        ItemListLayoutBinding binding;
 
-        public ViewHolder(@NonNull VideoListLayoutBinding itemView) {
+        public ViewHolder(@NonNull ItemListLayoutBinding itemView) {
             super(itemView.getRoot());
             this.binding = itemView;
         }
@@ -91,16 +85,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     private void optionMenu(String path, View view){
         PopupMenu popup = new PopupMenu(context, view);
         popup.getMenu().add("Play");
-        popup.getMenu().add("Favorite");
         popup.getMenu().add("Delete");
         popup.setOnMenuItemClickListener(item -> {
             if (item.getTitle().equals("Play")){
                 FragmentManager fragmentManager = ((FragmentActivity)(context)).getSupportFragmentManager();
                 VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment(path, context);
                 videoPlayerFragment.show(fragmentManager, "VideoPlayerFragment");
-            }else if (item.getTitle().equals("Favorite")){
-                Toasty.success(context, "Favorite", Toasty.LENGTH_SHORT).show();
-
             }else {
                // showDialog(path);
             }
