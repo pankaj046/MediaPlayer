@@ -3,11 +3,14 @@ package sharma.pankaj.mediaplayer.adapter;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
@@ -83,10 +86,12 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
         popup.getMenu().add("Open");
         popup.getMenu().add("Delete");
         popup.setOnMenuItemClickListener(item -> {
-            if (item.getTitle().equals("Play")) {
-//                FragmentManager fragmentManager = ((FragmentActivity) (context)).getSupportFragmentManager();
-//                VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment(path, context);
-//                videoPlayerFragment.show(fragmentManager, "VideoPlayerFragment");
+            if (item.getTitle().equals("Open")) {
+                Toast.makeText(context, "gh", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse(path), "image/*");
+                context.startActivity(intent);
             } else {
                 // showDialog(path);
             }

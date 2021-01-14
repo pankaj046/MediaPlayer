@@ -36,7 +36,7 @@ public class ImageFragment extends Fragment {
         binding.imageRecycleView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.imageRecycleView.setAdapter(adapter);
         ImageViewModel model = new ViewModelProvider(requireActivity()).get(ImageViewModel.class);
-        model.getAudioList().observe(requireActivity(), imageList -> {
+        model.getImageList().observe(requireActivity(), imageList -> {
             if (imageList.isEmpty()){
                 binding.notFound.setVisibility(View.VISIBLE);
                 binding.imageRecycleView.setVisibility(View.GONE);

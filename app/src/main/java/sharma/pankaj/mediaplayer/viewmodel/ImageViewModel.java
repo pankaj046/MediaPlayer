@@ -32,7 +32,7 @@ public class ImageViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public LiveData<List<ImageModel>> getAudioList() {
+    public LiveData<List<ImageModel>> getImageList() {
         if (imageModel == null) {
             imageModel = new MutableLiveData<>();
             loadImages();
