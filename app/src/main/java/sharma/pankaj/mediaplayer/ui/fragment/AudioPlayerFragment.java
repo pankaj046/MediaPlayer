@@ -47,7 +47,7 @@ import sharma.pankaj.mediaplayer.R;
 import sharma.pankaj.mediaplayer.databinding.FragmentAudioPlayerBinding;
 import sharma.pankaj.mediaplayer.databinding.FragmentVideoPlayerBinding;
 
-public class AudiooPlayerFragment extends DialogFragment implements Player.EventListener {
+public class AudioPlayerFragment extends DialogFragment implements Player.EventListener {
 
     FragmentAudioPlayerBinding binding;
     private static final String TAG = "VideoPlayerFragment";
@@ -60,8 +60,8 @@ public class AudiooPlayerFragment extends DialogFragment implements Player.Event
     Context context;
     private DataSource.Factory dataSourceFactory;
 
-    public AudiooPlayerFragment() { }
-    public AudiooPlayerFragment(String path, Context context) {
+    public AudioPlayerFragment() { }
+    public AudioPlayerFragment(String path, Context context) {
         this.path = path;
         this.context = context;
 

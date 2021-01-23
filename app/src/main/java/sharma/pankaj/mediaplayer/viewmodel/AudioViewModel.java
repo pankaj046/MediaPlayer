@@ -61,7 +61,7 @@ public class AudioViewModel extends AndroidViewModel {
             e.printStackTrace();
             Log.e(TAG, "loadAudios: " +e );
         }
-        AudioList.setValue(list);
+        AudioList.postValue(list);
     }
 
     //Extract name from file path

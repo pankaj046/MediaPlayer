@@ -37,6 +37,13 @@ public class AudioFragment extends Fragment {
         adapter = new AudioListAdapter(requireContext());
         binding.audioRecycleView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.audioRecycleView.setAdapter(adapter);
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         AudioViewModel model = new ViewModelProvider(requireActivity()).get(AudioViewModel.class);
         model.getAudioList().observe(requireActivity(), audioList -> {
             if (audioList.isEmpty()){
@@ -49,7 +56,6 @@ public class AudioFragment extends Fragment {
                 adapter.setVideoList(audioList);
             }
         });
-        return view;
     }
 
     @Override

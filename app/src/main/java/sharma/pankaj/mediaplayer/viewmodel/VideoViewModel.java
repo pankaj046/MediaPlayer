@@ -67,7 +67,7 @@ public class VideoViewModel extends AndroidViewModel {
             e.printStackTrace();
             Log.e(TAG, "loadVideos: " +e );
         }
-        videoList.setValue(list);
+        videoList.postValue(list);
     }
     //Extract name from file path
     private String getName(String path){

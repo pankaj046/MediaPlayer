@@ -23,8 +23,7 @@ import es.dmoral.toasty.Toasty;
 import sharma.pankaj.mediaplayer.R;
 import sharma.pankaj.mediaplayer.databinding.ItemListLayoutBinding;
 import sharma.pankaj.mediaplayer.model.AudioModel;
-import sharma.pankaj.mediaplayer.ui.fragment.AudiooPlayerFragment;
-import sharma.pankaj.mediaplayer.ui.fragment.VideoPlayerFragment;
+import sharma.pankaj.mediaplayer.ui.fragment.AudioPlayerFragment;
 
 public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.ViewHolder> {
 
@@ -89,7 +88,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
             if (item.getTitle().equals("Play")){
                 FragmentActivity activity = (FragmentActivity)(context);
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                AudiooPlayerFragment playerFragment = new AudiooPlayerFragment(path, context);
+                AudioPlayerFragment playerFragment = new AudioPlayerFragment(path, context);
                 playerFragment.show(fragmentManager, "VideoPlayerFragment");
             }else {
                  showDialog(path);

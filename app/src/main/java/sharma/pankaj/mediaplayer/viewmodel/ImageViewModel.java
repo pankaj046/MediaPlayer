@@ -59,7 +59,7 @@ public class ImageViewModel extends AndroidViewModel {
             e.printStackTrace();
             Log.e(TAG, "loadImages: " + e);
         }
-        imageModel.setValue(list);
+        imageModel.postValue(list);
     }
 
     //Extract name from file path
